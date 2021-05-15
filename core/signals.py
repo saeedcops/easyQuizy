@@ -134,43 +134,43 @@ def post_save_room_prize(sender, instance, created, **kwargs):
                     losser.save()
 
 
-# @receiver(post_save, sender=User)
-# def post_save_create_profile(sender, instance, created, **kwargs):
-#     if created and not instance.is_staff:
-#         Profile.objects.create(user= instance,my_league_id=1)
-#         profile = Profile.objects.get(user= instance)
-#         profile.token=instance.token
-#         GCMDevice.objects.create(
-#             registration_id=instance.token, 
-#             cloud_message_type="FCM",
-#             user=instance)
+@receiver(post_save, sender=User)
+def post_save_create_profile(sender, instance, created, **kwargs):
+    if created and not instance.is_staff:
+        Profile.objects.create(user= instance,my_league_id=1)
+        profile = Profile.objects.get(user= instance)
+        profile.token=instance.token
+        GCMDevice.objects.create(
+            registration_id=instance.token, 
+            cloud_message_type="FCM",
+            user=instance)
 
-#         if instance.facebook_id:
-#             profile.name=instance.facebook_name
-#             profile.image=instance.facebook_image
-#             profile.gem=5
-#             profile.flag=instance.flag
-#             profile.facebook_id=instance.facebook_id
+        if instance.facebook_id:
+            profile.name=instance.facebook_name
+            profile.image=instance.facebook_image
+            profile.gem=5
+            profile.flag=instance.flag
+            profile.facebook_id=instance.facebook_id
            
-#         else:
-#             profile.name='Guest'+str(random.randrange(20, 5000, 3))
-#             profile.image='http://192.168.10.143:8000/media/8.png'
-#             profile.gem=2
-#             profile.flag=instance.flag
+        else:
+            profile.name='Guest'+str(random.randrange(20, 5000, 3))
+            profile.image='http://192.168.10.143:8000/media/8.png'
+            profile.gem=2
+            profile.flag=instance.flag
         
-#         friend=instance.friend
-#         if friend :
+        friend=instance.friend
+        if friend :
            
-#             for item in friend:
-#                 try:
-#                     user=Profile.objects.get(facebook_id=item)
-#                     profile.friends.add(user)
-#                     user.friends.add(profile)
-#                     user.save()
-#                 except ObjectDoesNotExist:
-#                     pass
+            for item in friend:
+                try:
+                    user=Profile.objects.get(facebook_id=item)
+                    profile.friends.add(user)
+                    user.friends.add(profile)
+                    user.save()
+                except ObjectDoesNotExist:
+                    pass
 
-#         profile.save()
-#         league=League.objects.get(pk=1)
-#         league.profiles.add(Profile.objects.get(user=instance))
-#         league.save()
+        profile.save()
+        league=League.objects.get(pk=1)
+        league.profiles.add(Profile.objects.get(user=instance))
+        league.save()
