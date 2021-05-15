@@ -62,9 +62,10 @@ PUSH_NOTIFICATIONS_SETTINGS = {
         # "WP_CLAIMS": {'sub': "mailto: development@example.com"}
 }
 
-CELERY_BACKEND = 'redis://localhost:6379/3'
-CELERY_BROKER_URL = 'redis://localhost:6379/4'
-CELERY_RESULT_BACKEND = 'redis://localhost:6379/5'
+
+CELERY_BACKEND = os.environ['REDIS_URL']
+CELERY_BROKER_URL = os.environ['REDIS_URL']
+CELERY_RESULT_BACKEND = os.environ['REDIS_URL']
 
 CELERY_TASK_SERIALIZER = 'json'
 CELERY_RESULT_SERIALIZER = 'json'
@@ -72,13 +73,6 @@ CELERY_ACCEPT_CONTENT = ['json']
 CELERY_ENABLE_UTC = True
 
 
-# CELERY_BROKER_URL = os.environ.get("CELERY_BROKER", "redis://redis:6379/0")
-# CELERY_RESULT_BACKEND = os.environ.get("CELERY_BROKER", "redis://redis:6379/0")
-
-# CELERY_ACCEPT_CONTENT = ['application/json']
-# CELERY_TASK_SERIALIZER = 'json'
-# CELERY_RESULT_SERIALIZER = 'json'
-# CELERY_TIMEZONE = 'Africa/Cairo'
 CELERY_IMPORTS = (
     'room.tasks',
 )
@@ -203,7 +197,7 @@ STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
 STATICFILES_DIRS = [os.path.join(BASE_DIR, "static")]
 
 
-MEDIA_URL = '/media/'
+MEDIA_URL = 'media/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 
 
@@ -216,10 +210,12 @@ CHANNEL_LAYERS = {
     "default": {
         "BACKEND": "channels_redis.core.RedisChannelLayer",
         "CONFIG": {
-            "hosts": [os.environ.get('REDIS_URL', 'redis://localhost:6379')],
+            "hosts": [os.environ.get('REDIS_URL', os.environ['REDIS_URL'])],
         },
     },
 }
+
+
 
 CACHES = {
     "default": {
