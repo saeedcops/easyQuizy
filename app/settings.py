@@ -197,7 +197,7 @@ STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
 STATICFILES_DIRS = [os.path.join(BASE_DIR, "static")]
 
 
-MEDIA_URL = 'media/'
+MEDIA_URL = 'app/media/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 
 
@@ -210,7 +210,7 @@ CHANNEL_LAYERS = {
     "default": {
         "BACKEND": "channels_redis.core.RedisChannelLayer",
         "CONFIG": {
-            "hosts": [os.environ.get('REDIS_URL', os.environ['REDIS_URL'])],
+            "hosts": [os.environ.get('URI')],
         },
     },
 }
