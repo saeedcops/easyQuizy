@@ -21,7 +21,8 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # See https://docs.djangoproject.com/en/3.1/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = '&442jv50%6=(s8v#ge(l5&c=780zzf-v#4u-@onde$d95)s-25'
+# SECRET_KEY = '&442jv50%6=(s8v#ge(l5&c=780zzf-v#4u-@onde$d95)s-25'
+SECRET_KEY=os.environ.get('SECRET_KEY', '&442jv50%6=(s8v#ge(l5&c=780zzf-v#4u-@onde$d95)s-25')
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = False
@@ -206,15 +207,24 @@ AUTH_USER_MODEL='core.User'
 ASGI_APPLICATION = "app.routing.application"
 # ASGI_APPLICATION = 'app.asgi.application'
 
+# CHANNEL_LAYERS = {
+#     "default": {
+#         "BACKEND": "channels_redis.core.RedisChannelLayer",
+#         "CONFIG": {
+#             "hosts": [os.environ['REDIS_URL']],
+#         },
+#     },
+# }
+
 CHANNEL_LAYERS = {
     "default": {
         "BACKEND": "channels_redis.core.RedisChannelLayer",
         "CONFIG": {
-            "hosts": [os.environ['REDIS_URL']],
+            "hosts": [os.environ.get('REDIS_URL', 'redis://localhost:6379')],
         },
+        "symmetric_encryption_keys": [SECRET_KEY],
     },
 }
-
 
 
 CACHES = {
