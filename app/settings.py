@@ -198,7 +198,7 @@ STATICFILES_DIRS = [os.path.join(BASE_DIR, "static")]
 
 
 MEDIA_URL = '/media/'
-MEDIA_ROOT = os.path.join(BASE_DIR, 'media/')
+MEDIA_ROOT = os.path.join(BASE_DIR, '/media/')
 
 
 AUTH_USER_MODEL='core.User'
@@ -210,7 +210,7 @@ CHANNEL_LAYERS = {
     "default": {
         "BACKEND": "channels_redis.core.RedisChannelLayer",
         "CONFIG": {
-            "hosts": ['redis://:pa5315ae4e6e9806dd7d1bde5202d540bc48d569472e90935f117e239f2da0b3f@ec2-3-93-223-129.compute-1.amazonaws.com:21960'],
+            "hosts": [os.environ['REDIS_URL']],
         },
     },
 }
