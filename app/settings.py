@@ -203,17 +203,9 @@ STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
 STATICFILES_DIRS = [os.path.join(BASE_DIR, "static")]
 
 
-# STATIC_URL = '/static/static/'
 MEDIA_URL = '/media/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 
-# STATIC_ROOT = os.path.join(BASE_DIR, "vol/web/static")
-# MEDIA_ROOT = os.path.join(BASE_DIR, "vol/web/media")
-# STATIC_ROOT = 'vol/web/static'
-# MEDIA_ROOT = 'vol/web/media'
-
-# STATIC_ROOT = '/home/app/web/staticfiles'
-# MEDIA_ROOT = '/home/app/web/mediafiles'
 
 AUTH_USER_MODEL='core.User'
 
@@ -228,13 +220,13 @@ CHANNEL_LAYERS = {
         },
     },
 }
-# CHANNEL_LAYERS = {
-#     'default': {
-#         'BACKEND': 'channels_redis.core.RedisChannelLayer',
-#         'CONFIG': {
-#             "hosts": [('redis', 6379)],
-#         },
-#     },
-# }
 
-# CHANNELS_PRESENCE_MAX_AGE = 20 
+CACHES = {
+    "default": {
+        "BACKEND": "django_redis.cache.RedisCache",
+        "LOCATION": os.environ.get('REDIS_URL'),
+        "OPTIONS": {
+            "CLIENT_CLASS": "django_redis.client.DefaultClient",
+        }
+    }
+}
