@@ -154,7 +154,7 @@ def post_save_create_profile(sender, instance, created, **kwargs):
            
         else:
             profile.name='Guest'+str(random.randrange(20, 5000, 3))
-            profile.image='http://192.168.10.143:8000/media/8.png'
+            profile.image='https://easyquzy.herokuapp.com/static/media/8.png'
             profile.gem=2
             profile.flag=instance.flag
         
